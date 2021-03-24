@@ -5,21 +5,21 @@ const mongoose = require('mongoose');
 const StudentSchema = new mongoose.Schema({
     first_name: {
         type: String,
-        required:[true,"Name is required"],
-        minlength: [3,"Name has to be not less than 3 characters"]
+        // required:[true,"Name is required"],
+        // minlength: [3,"Name has to be not less than 3 characters"]
     },
     last_name: {
         type: String,
-        required:[true,"Name is required"],
-        minlength: [3,"Name has to be not less than 3 characters"]
+        // required:[true,"Name is required"],
+        // minlength: [3,"Name has to be not less than 3 characters"]
     },
     graduation_date:{
         type: Date,
-        required:[true,"Graduation date is required"],
+        // required:[true,"Graduation date is required"],
     },
     profile_picture: {
         type: String,
-        required:[true,"Photo is required"]
+        // required:[true,"Photo is required"]
     },
     number_of_belts:{
         type: Number
