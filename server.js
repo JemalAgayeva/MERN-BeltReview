@@ -11,11 +11,11 @@ app.use(express.json());
 
 // ******* Mongoose connection config file **********//
 
-require("./server/config/project.config")
+require("./server/config/student.config")
 
 // const Joke = require("./server/models/jokes.model")
 
-require("./server/routes/project.route") (app)
+require("./server/routes/student.route") (app)
 
 // ******* Require routes file **********//
 
