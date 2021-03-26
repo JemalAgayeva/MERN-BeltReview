@@ -1,6 +1,6 @@
+import React, {useState} from 'react';
 import { navigate } from '@reach/router';
 import axios from 'axios';
-import React, {useState} from 'react';
 
 const CreateNinja = () => {
 
@@ -13,17 +13,20 @@ const CreateNinja = () => {
         is_vet: false
     })
 
+    const [errors, setErrors] = useState({})
+
     const changeHandler = (e) =>{
         console.log("trying to make change")
-        if(e.target.type === "checkbox"){
+        if(e.target.type == "checkbox"){
             setFormInfo({
                 ...formInfo,
                 is_vet: !formInfo.is_vet
             })
         }
-        setFormInfo({
-            ...formInfo,
-            [e.target.name]:e.target.value
+        else{
+            setFormInfo({
+                ...formInfo,
+                [e.target.name]:e.target.value
         })
     }
 
@@ -32,7 +35,13 @@ const CreateNinja = () => {
         axios.post("http://localhost:8000/api/students/create", formInfo)
             .then(response => {
                 console.log("response after submitting the information of the new student", response)
-                navigate("/")
+                if(response.data.errors){
+                    console.log("You have validation errors")
+                    setErrors(response.data.errors)
+                }
+                else{
+                    navigate("/")
+                }
             })
             .catch(err => console.log(err))
     }
@@ -42,23 +51,27 @@ const CreateNinja = () => {
             <form lassName="col-6 mx-auto" onSubmit={submitHandler}>
                 <div className="form-group">
                     <label htmlFor="">First Name:</label>
-                    <input type="text" name="first_name" className="form-control" onChange={changeHandler}/>
+                    <p className="text-danger">{errors.first_name? errors.first_name.message: ""}</p>
+                    <input type="text" name="first_name" className="form-control col-6 mx-auto" onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Last Name:</label>
-                    <input type="text" name="last_name" className="form-control" onChange={changeHandler}/>
+                    <p className="text-danger">{errors.last_name? errors.last_name.message: ""}</p>
+                    <input type="text" name="last_name" className="form-control col-6 mx-auto" onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Graduation Date:</label>
-                    <input type="date" name="graduation_date" className="form-control" onChange={changeHandler}/>
+                    <p className="text-danger">{errors.graduation_date? errors.graduation_date.message: ""}</p>
+                    <input type="date" name="graduation_date" className="form-control col-6 mx-auto" onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Profile Picture:</label>
-                    <input type="text" name="profile_picture" className="form-control" onChange={changeHandler}/>
+                    <p className="text-danger">{errors.profile_picture? errors.profile_picture.message: ""}</p>
+                    <input type="text" name="profile_picture" className="form-control col-6 mx-auto" onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Number of Belts:</label>
-                    <input type="number" name="number_of_belts" className="form-control" onChange={changeHandler}/>
+                    <input type="number" name="number_of_belts" className="form-control col-6 mx-auto" onChange={changeHandler}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Is Veteran?</label>
@@ -69,6 +82,6 @@ const CreateNinja = () => {
         </div>
     );
 };
-
+}
 
 export default CreateNinja;

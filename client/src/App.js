@@ -4,6 +4,7 @@ import {Link, Router} from '@reach/router'
 import AllNinjas from './components/AllNinjas'
 import OneNinja from './components/OneNinja'
 import CreateNinja from './components/CreateNinja'
+import EditNinja from './components/EditNinja'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <AllNinjas path="/"> </AllNinjas>
         <OneNinja path="/ninjas/:studentId"> </OneNinja>
         <CreateNinja path="/ninjas/create/new" > </CreateNinja>
+        <EditNinja path="/ninjas/edit/:studentId"></EditNinja>
         </Router>
       </div>
     </div>

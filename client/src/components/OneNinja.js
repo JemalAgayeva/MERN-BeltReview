@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-// import {navigate} from '@reach/router'
+import {navigate} from '@reach/router'
 
 
 
@@ -9,15 +9,27 @@ const OneNinja = (props) => {
     const [indStudent, setIndStudent] = useState({})
 
     useEffect(() =>{
-    axios.get(`http://localhost:8000/api/students/${props.studentId}`)
-        .then(response =>{
-            console.log("response after trying to get one student", response)
-            setIndStudent(response.data.results)
+        axios.get(`http://localhost:8000/api/students/${props.studentId}`)
+            .then(response =>{
+                console.log("response after trying to get one student", response)
+                setIndStudent(response.data.results)
+    
+            })
+            .catch(err => console.log(err))
+    
+    }, [])
 
-        })
-        .catch(err => console.log(err))
-
-}, [])
+    
+    const deleteHandler = (e) =>{
+        console.log("trying to delete the student")
+        axios.delete(`http://localhost:8000/api/students/delete/${props.studentId}`)
+            .then(response => {
+                console.log("sent a delete request", response)
+                navigate("/")
+            })
+            .catch(err => console.log(err))
+    }
+    
 
     return (
         <div className="card">
@@ -27,7 +39,8 @@ const OneNinja = (props) => {
                 <p className="card-text">Graduation Date: {indStudent.graduation_date}</p>
                 <p className="card-text">Number of Belts: {indStudent.number_of_belts}</p>
                 <p className="card-text">Veteran Status: {indStudent.is_vet? "Thank you for your Service!" : "You are welcome for the Veterans' Service"}</p> 
-                {/* <a href="#!" className="btn btn-primary">Go somewhere</a> */}
+                
+                <button className="btn btn-danger" onClick={deleteHandler}>Delete Student</button>
             </div>
         </div>
     );
